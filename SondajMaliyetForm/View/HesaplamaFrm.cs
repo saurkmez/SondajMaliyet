@@ -51,6 +51,7 @@ namespace SondajMaliyetForm.View
             };
 
 
+
             Label delmeTur = new Label()
             {
                 Text = "Delme Çeşidi",
