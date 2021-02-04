@@ -50,6 +50,7 @@ namespace SondajMaliyetForm.View
                 FlowDirection = FlowDirection.LeftToRight
             };
 
+
             Label delmeTur = new Label()
             {
                 Text = "Delme Çeşidi",
