@@ -267,8 +267,9 @@ namespace SondajMaliyetClass.DB
                     SQLiteCommand cmd = new SQLiteCommand(con);
                     foreach (var item in listMatkap)
                     {
-                        cmd.CommandText = @"replace into MatkapCap (mId, matkapCapi,fiyat,gunlukIs) 
-                                            VALUES (@mId,@matkapCapi,@fiyat,@gunlukIs)";
+                        cmd.CommandText = @"insert into MatkapCap (mId, matkapCapi,fiyat,gunlukIs) 
+                                            select @mId,@matkapCapi,@fiyat,@gunlukIs 
+                                            where not exist(select 1 from MatkapCap where matkapCapi = @matkapCapi)"; 
                         cmd.Parameters.AddWithValue("@mId", item.mId);
                         cmd.Parameters.AddWithValue("@matkapCapi", item.matkapCapi);
                         cmd.Parameters.AddWithValue("@fiyat", item.fiyat);

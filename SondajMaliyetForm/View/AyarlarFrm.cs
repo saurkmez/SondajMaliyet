@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SondajMaliyetClass.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -54,6 +55,37 @@ namespace SondajMaliyetForm.View
         private void AyarlarFrm_Load(object sender, EventArgs e)
         {
             kur.Text = "USD= "+ GetRate("USD").ToString() + " TL";
+
+            List<MatkapCap> matkaps = new List<MatkapCap>();
+            using (SQLiteConnection con = new SQLiteConnection("Data Source=sondajMaliyet.db;Version=3;"))
+            {
+                try
+                {
+                    con.Open();
+                    SQLiteCommand cmd = new SQLiteCommand(con);
+                    cmd.CommandText = @"select * from MatkapCap";
+                    SQLiteDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        matkaps.Add(new MatkapCap() { matkapCapi = reader.GetDouble(1), fiyat = reader.GetDouble(2) });
+                    }
+                    con.Close();
+                }
+                catch (Exception)
+                {
+                    con.Close();
+                    throw;
+                }
+            }
+
+            txt85inch.Text = matkaps.Where(x => x.matkapCapi == 8.5).FirstOrDefault().fiyat.ToString();
+            txt95inch.Text = matkaps.Where(x => x.matkapCapi == 9.5).FirstOrDefault().fiyat.ToString();
+            txt105inch.Text = matkaps.Where(x => x.matkapCapi == 10.5).FirstOrDefault().fiyat.ToString();
+            txt115inch.Text = matkaps.Where(x => x.matkapCapi == 11.5).FirstOrDefault().fiyat.ToString();
+            txt125inch.Text = matkaps.Where(x => x.matkapCapi == 12.5).FirstOrDefault().fiyat.ToString();
+            txt135inch.Text = matkaps.Where(x => x.matkapCapi == 13.5).FirstOrDefault().fiyat.ToString();
+            txt155inch.Text = matkaps.Where(x => x.matkapCapi == 15.5).FirstOrDefault().fiyat.ToString();
+            txt175inch.Text = matkaps.Where(x => x.matkapCapi == 17.5).FirstOrDefault().fiyat.ToString();
 
 
             using (SQLiteConnection con = new SQLiteConnection("Data Source=sondajMaliyet.db;Version=3;"))
@@ -143,6 +175,27 @@ namespace SondajMaliyetForm.View
                     cmd.Parameters.AddWithValue("@tankHacmi", Convert.ToInt32(depoLt.Text));
                     cmd.Parameters.AddWithValue("@birimFiyat", Convert.ToDouble(litreFiyat.Text));
                     cmd.ExecuteNonQuery();
+
+                    List<MatkapCap> listMatkapCaps = new List<MatkapCap>()
+                    {
+                        new MatkapCap(){ matkapCapi=8.5, fiyat=Convert.ToDouble(txt85inch.Text)},
+                        new MatkapCap(){ matkapCapi=9.5, fiyat=Convert.ToDouble(txt95inch.Text)},
+                        new MatkapCap(){ matkapCapi=10.5, fiyat=Convert.ToDouble(txt105inch.Text)},
+                        new MatkapCap(){ matkapCapi=11.5, fiyat=Convert.ToDouble(txt115inch.Text)},
+                        new MatkapCap(){ matkapCapi=12.5, fiyat=Convert.ToDouble(txt125inch.Text)},
+                        new MatkapCap(){ matkapCapi=13.5, fiyat=Convert.ToDouble(txt135inch.Text)},
+                        new MatkapCap(){ matkapCapi=15.5, fiyat=Convert.ToDouble(txt155inch.Text)},
+                        new MatkapCap(){ matkapCapi=17.5, fiyat=Convert.ToDouble(txt175inch.Text)}
+                    };
+
+                    foreach (var item in listMatkapCaps)
+                    {
+                        cmd.CommandText = @"UPDATE MatkapCap SET fiyat=@fiyat WHERE matkapCapi=@matkapCapi";
+                        cmd.Parameters.AddWithValue("@fiyat", item.fiyat);
+                        cmd.Parameters.AddWithValue("@matkapCapi", item.matkapCapi);
+                        cmd.ExecuteNonQuery();
+                    }
+
                     con.Close();
                 }
                 catch (Exception)
@@ -151,11 +204,6 @@ namespace SondajMaliyetForm.View
                     throw;
                 }
             }
-        }
-
-        private void nakliyeGider_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
