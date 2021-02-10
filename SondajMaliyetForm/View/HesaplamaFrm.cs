@@ -37,9 +37,11 @@ namespace SondajMaliyetForm.View
             panelSayisi++;
             Panel panel = new Panel()
             {
+                Name = panelSayisi.ToString(),
                 Size = new Size(1000, 50),
                 Location = new Point(50, yAxis),
-                BackColor = Color.FromArgb(176, 229, 247)
+                BackColor = Color.FromArgb(176, 229, 247),
+                Tag = panelSayisi
             };
 
             FlowLayoutPanel flp = new FlowLayoutPanel()
@@ -51,6 +53,7 @@ namespace SondajMaliyetForm.View
             };
 
 
+            //////////////////////////////////////////////////////
 
             Label delmeTur = new Label()
             {
@@ -76,11 +79,17 @@ namespace SondajMaliyetForm.View
 
             Panel pnlDelme = new Panel()
             {
-                Size = new Size(80, 35),
+                Margin = new Padding(10,0,0,0),
+                Size = new Size(100, 35),
                 BackColor = Color.FromArgb(176, 229, 247)
             };
             pnlDelme.Controls.Add(delmeTur);
             pnlDelme.Controls.Add(delmeCesit);
+
+
+            ////////////////////////////////////////////
+            
+
 
             List<ZeminTipi> listzemin = new List<ZeminTipi>();
             listzemin.Add(new ZeminTipi() { zId = 0, tipAdi = "Tip Seçiniz" });
@@ -138,39 +147,22 @@ namespace SondajMaliyetForm.View
                 }
             }
 
-
+            //////////////////////////////////////////////////
+            Panel pnlDerinlik = new Panel()
+            {
+                Margin = new Padding(10, 0, 0, 0),
+                Size = new Size(100, 35),
+                BackColor = Color.FromArgb(176, 229, 247)
+            };
 
             TextBox derinliktext = new TextBox()
             {
                 Text = "1",
                 Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold),
-                Location = new Point(509, 18),
-                Size = new Size(148, 20)
+                Size = new Size(148, 20),
+                Dock= DockStyle.Bottom
             };
             derinlikListText.Add(derinliktext);
-            Label maliyetlbl = new Label()
-            {
-                Text = "",
-                Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold),
-                Margin = new Padding(3, 3, 3, 3),
-                AutoSize = false,
-                Anchor = AnchorStyles.None,
-                Location = new Point(694, 18),
-                BackColor = Color.White,
-                Size = new Size(148, 20),
-                Tag=panelSayisi
-            };
-            maliyetList.Add(maliyetlbl);
-            
-            Label matkap = new Label()
-            {
-                Text = "MATKAP ÇAPI:",
-                Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold),
-                Margin = new Padding(3, 3, 3, 3),
-                AutoSize = true,
-                Anchor = AnchorStyles.None,
-                Location = new Point(324, 2),
-            };
             Label derinlik = new Label()
             {
                 Text = "DERİNLİK:",
@@ -178,8 +170,20 @@ namespace SondajMaliyetForm.View
                 Margin = new Padding(3, 3, 3, 3),
                 AutoSize = true,
                 Anchor = AnchorStyles.None,
-                Location = new Point(548, 2),
             };
+
+            pnlDerinlik.Controls.Add(derinlik);
+            pnlDerinlik.Controls.Add(derinliktext);
+
+            ////////////////////////////////////////////////////
+            
+            Panel pnlMaliyet = new Panel()
+            {
+                Margin = new Padding(10, 0, 0, 0),
+                Size = new Size(100, 35),
+                BackColor = Color.FromArgb(176, 229, 247)
+            };
+
             Label maliyet = new Label()
             {
                 Text = "MALİYET:",
@@ -187,7 +191,32 @@ namespace SondajMaliyetForm.View
                 Margin = new Padding(3, 3, 3, 3),
                 AutoSize = true,
                 Anchor = AnchorStyles.None,
-                Location = new Point(735, 2),
+            };
+
+            Label maliyetlbl = new Label()
+            {
+                Text = "",
+                Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold),
+                Margin = new Padding(3, 3, 3, 3),
+                AutoSize = false,
+                Anchor = AnchorStyles.None,
+                BackColor = Color.White,
+                Size = new Size(148, 20),
+                Tag=panelSayisi,
+                Dock = DockStyle.Bottom,
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            maliyetList.Add(maliyetlbl);
+
+            pnlMaliyet.Controls.Add(maliyet);
+            pnlMaliyet.Controls.Add(maliyetlbl);
+
+
+            ///////////////////////////////////////////
+            Panel pnlinch = new Panel()
+            {
+                Size = new Size(35, 35),
+                BackColor = Color.FromArgb(176, 229, 247)
             };
             Label inch = new Label()
             {
@@ -196,8 +225,16 @@ namespace SondajMaliyetForm.View
                 Margin = new Padding(3, 3, 3, 3),
                 AutoSize = true,
                 Anchor = AnchorStyles.None,
-                Location = new Point(451, 26),
+                Dock= DockStyle.Bottom,
             };
+            pnlinch.Controls.Add(inch);
+            //////////////////////////////////////////////////
+            Panel pnltl = new Panel()
+            {
+                Size = new Size(30, 35),
+                BackColor = Color.FromArgb(176, 229, 247)
+            };
+
             Label tl = new Label()
             {
                 Text = "TL",
@@ -205,7 +242,15 @@ namespace SondajMaliyetForm.View
                 Margin = new Padding(3, 3, 3, 3),
                 AutoSize = true,
                 Anchor = AnchorStyles.None,
-                Location = new Point(848, 25),
+                Dock = DockStyle.Bottom,
+            };
+            pnltl.Controls.Add(tl);
+
+            //////////////////////////////////////////
+            Panel pnlm = new Panel()
+            {
+                Size = new Size(20, 35),
+                BackColor = Color.FromArgb(176, 229, 247)
             };
             Label metre = new Label()
             {
@@ -214,15 +259,39 @@ namespace SondajMaliyetForm.View
                 Margin = new Padding(3, 3, 3, 3),
                 AutoSize = true,
                 Anchor = AnchorStyles.None,
-                Location = new Point(661, 25),
+                Dock = DockStyle.Bottom
+            };
+
+            pnlm.Controls.Add(metre);
+            ///////////////////////////////////////////////////
+            Panel pnlMatkap = new Panel()
+            {
+                Margin = new Padding(10, 0, 0, 0),
+                Size = new Size(100, 35),
+                BackColor = Color.FromArgb(176, 229, 247)
+            };
+
+            Label matkap = new Label()
+            {
+                Text = "MATKAP ÇAPI:",
+                Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold),
+                Margin = new Padding(3, 3, 3, 3),
+                AutoSize = true,
+                Anchor = AnchorStyles.None,
             };
             ComboBox matkapucu = new ComboBox()
             {
                 Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold),
-                Location = new Point(304, 18),
+                Dock = DockStyle.Bottom,
                 Size = new Size(142, 21)
             };
             matkapcombo.Add(matkapucu);
+
+            pnlMatkap.Controls.Add(matkap);
+            pnlMatkap.Controls.Add(matkapucu);
+
+            ////////////////////////////////////////////////////////
+            
 
             derinliktext.Tag = new maliyetHesapParameter()
             {
@@ -231,6 +300,9 @@ namespace SondajMaliyetForm.View
             matkapucu.DataSource = listmatkap;
             matkapucu.DisplayMember = "matkapCapi";
             matkapucu.ValueMember = "mId";
+
+
+            /////////////////////////////////////////
 
             Label zemin = new Label()
             {
@@ -261,11 +333,14 @@ namespace SondajMaliyetForm.View
 
             Panel pnlZemin = new Panel()
             {
-                Size = new Size(80, 35),
+                Margin = new Padding(10, 0, 0, 0),
+                Size = new Size(100, 35),
                 BackColor = Color.FromArgb(176, 229, 247)
             };
             pnlZemin.Controls.Add(zemin);
             pnlZemin.Controls.Add(zemintipi);
+
+            //////////////////////////////////////////////////
 
             matkapucu.Tag = new maliyetHesapParameter()
             {
@@ -273,29 +348,96 @@ namespace SondajMaliyetForm.View
                 zeminId = zemintipi.SelectedIndex,
                 panelsayisi = panelSayisi
             };
-            derinliktext.TextChanged += Derinliktext_TextChanged;
-            zemintipi.SelectedIndexChanged += Zemintipi_SelectedIndexChanged;
-            matkapucu.SelectedIndexChanged += Matkapucu_SelectedIndexChanged;
+
+            /////////////////////////////////////////////
+
+
+            Panel pnlSil = new Panel()
+            {
+                Margin = new Padding(10, 0, 0, 0),
+                Size = new Size(100, 35),
+                BackColor = Color.FromArgb(176, 229, 247)
+            };
+
+            Button btnSil = new Button()
+            {
+                Text = "Sil",
+                Dock = DockStyle.Bottom,
+                BackColor = Color.Red,
+                Tag = panel
+            };
+            btnSil.Click += BtnSil_Click;
+
+            pnlSil.Controls.Add(btnSil);
 
             flp.Controls.Add(pnlDelme);
             flp.Controls.Add(pnlZemin);
-            //flp.Controls.Add(metre);
-            //flp.Controls.Add(tl);
-            //flp.Controls.Add(inch);
-            //flp.Controls.Add(maliyet);
-            //flp.Controls.Add(derinlik);
-            //flp.Controls.Add(zemintipi);
-            //flp.Controls.Add(zemin);
-            //flp.Controls.Add(maliyetlbl);
-            //flp.Controls.Add(matkapucu);
-            //flp.Controls.Add(derinliktext);
-            //flp.Controls.Add(matkap);
+            flp.Controls.Add(pnlMatkap);
+            flp.Controls.Add(pnlinch);
+            flp.Controls.Add(pnlDerinlik);
+            flp.Controls.Add(pnlm);
+            flp.Controls.Add(pnlMaliyet);
+            flp.Controls.Add(pnltl);
+            flp.Controls.Add(pnlSil);
+
             panel.Controls.Add(flp);
             return panel;
 
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void BtnSil_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            Panel pnl = (Panel)btn.Tag;
+            int panelsira = (int)pnl.Tag;
+            panelsira--;
+
+            maliyetList.RemoveAt(panelsira);
+            zemincombo.RemoveAt(panelsira);
+            matkapcombo.RemoveAt(panelsira);
+            derinlikListText.RemoveAt(panelsira);
+            yipranmaList = yipranmaList.Where(x => x != panelsira).ToArray();
+            mazotlist = yipranmaList.Where(x => x != panelsira).ToArray();
+            nakliyelist = yipranmaList.Where(x => x != panelsira).ToArray();
+
+            int veri = 0;
+            int silinecek = 0;
+            int i = 0;
+            panelsira++;
+            foreach (Control item in panel2.Controls)
+            {
+                int.TryParse(item.Name, out veri);
+
+                if (item.Name == panelsira.ToString())
+                {
+                    silinecek = i;   
+                }
+                else if (veri > panelsira)
+                {
+                    item.Name = (veri - 1).ToString();
+                    item.Tag = (veri - 1);
+                    item.Location = new Point(50, item.Location.Y - 50);
+                }
+                i++;
+            }
+            panel2.Controls.RemoveAt(silinecek);
+
+            //for(int i = panelsira; i<panelSayisi; i++)
+            //{
+            //    foreach (Control item in panel2.Controls)
+            //    {
+            //        if (item.Name == (i+1).ToString())
+            //        {
+                        
+            //        }
+            //    }
+            //}
+            panelSayisi--;
+            y = y - 50;
+
+        }
+
+        public void Hesapla()
         {
             topmal = 0;
             topbirimmal = 0;
@@ -308,7 +450,7 @@ namespace SondajMaliyetForm.View
                     derinlikListText[i].Text = "0";
                 }
                 maliyet.Text = maliyetHesapla(zemincombo[i].SelectedIndex, matkapcombo[i].SelectedIndex,
-                    Convert.ToInt32(derinlikListText[i].Text),i).ToString();
+                    Convert.ToInt32(derinlikListText[i].Text), i).ToString();
                 topmal += Convert.ToDouble(maliyet.Text);
                 topderin += Convert.ToInt32(derinlikListText[i].Text);
             }
@@ -317,43 +459,7 @@ namespace SondajMaliyetForm.View
             lblMetreMaliyet.Text = topbirimmal.ToString("0.00") + " TL";
         }
 
-        private void Derinliktext_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            maliyetHesapParameter param = (maliyetHesapParameter)textBox.Tag;
-            Label maliyet = maliyetList[param.panelsayisi - 1];
-            if (derinlikListText[param.panelsayisi - 1].Text == "")
-            {
-                derinlikListText[param.panelsayisi - 1].Text = "0";
-            }
-            maliyet.Text = maliyetHesapla(zemincombo[param.panelsayisi - 1].SelectedIndex, matkapcombo[param.panelsayisi - 1].SelectedIndex,
-                Convert.ToInt32(derinlikListText[param.panelsayisi - 1].Text),param.panelsayisi-1).ToString();
-        }
 
-        private void Matkapucu_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBox combo = (ComboBox)sender;
-            maliyetHesapParameter param = (maliyetHesapParameter)combo.Tag;
-            Label maliyet = maliyetList[param.panelsayisi - 1];
-            if(derinlikListText[param.panelsayisi - 1].Text == ""){
-                derinlikListText[param.panelsayisi - 1].Text = "0";
-            }
-            maliyet.Text = maliyetHesapla(zemincombo[param.panelsayisi - 1].SelectedIndex,matkapcombo[param.panelsayisi - 1].SelectedIndex,
-                Convert.ToInt32(derinlikListText[param.panelsayisi - 1].Text),param.panelsayisi-1).ToString();
-        }
-
-        private void Zemintipi_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBox combo = (ComboBox)sender;
-            maliyetHesapParameter param = (maliyetHesapParameter)combo.Tag;
-            Label maliyet = maliyetList[param.panelsayisi - 1];
-            if (derinlikListText[param.panelsayisi - 1].Text == "")
-            {
-                derinlikListText[param.panelsayisi - 1].Text = "0";
-            }
-            maliyet.Text = maliyetHesapla(zemincombo[param.panelsayisi - 1].SelectedIndex, matkapcombo[param.panelsayisi - 1].SelectedIndex,
-                Convert.ToInt32(derinlikListText[param.panelsayisi - 1].Text),param.panelsayisi-1).ToString();
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -370,11 +476,6 @@ namespace SondajMaliyetForm.View
 
         private void HesaplamaFrm_Load(object sender, EventArgs e)
         {
-
-            Timer timer = new Timer();
-            timer.Enabled = true;
-            timer.Interval = 1000;
-            timer.Tick += Timer_Tick;
             panel2.Controls.Add(GetPanel(y));
             y += 50;
         }
@@ -636,6 +737,11 @@ namespace SondajMaliyetForm.View
                     throw;
                 }
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Hesapla();
         }
     }
     public class maliyetHesapParameter{
