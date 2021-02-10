@@ -21,23 +21,33 @@ namespace SondajMaliyetForm.View
 
         private decimal GetRate(string code)
         {
-            string url = string.Empty;
-            var date = DateTime.Now;
-            if (date.Date == DateTime.Today)
-                url = "http://www.tcmb.gov.tr/kurlar/today.xml";
-            else
-                url = string.Format("http://www.tcmb.gov.tr/kurlar/{0}{1}/{2}{1}{0}.xml", date.Year, addZero(date.Month), addZero(date.Day));
-
-            System.Xml.Linq.XDocument document = System.Xml.Linq.XDocument.Load(url);
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            var result = document.Descendants("Currency")
-            .Where(v => v.Element("ForexBuying") != null && v.Element("ForexBuying").Value.Length > 0)
-            .Select(v => new Currency
+            var result = new List<Currency>();
+            try
             {
-                Code = v.Attribute("Kod").Value,
-                Rate = decimal.Parse(v.Element("ForexBuying").Value.Replace('.', ','))
-            }).ToList();
-            return result.FirstOrDefault(s => s.Code == code).Rate;
+                string url = string.Empty;
+                var date = DateTime.Now;
+                if (date.Date == DateTime.Today)
+                    url = "http://www.tcmb.gov.tr/kurlar/today.xml";
+                else
+                    url = string.Format("http://www.tcmb.gov.tr/kurlar/{0}{1}/{2}{1}{0}.xml", date.Year, addZero(date.Month), addZero(date.Day));
+
+                System.Xml.Linq.XDocument document = System.Xml.Linq.XDocument.Load(url);
+                Dictionary<string, string> dic = new Dictionary<string, string>();
+                result = document.Descendants("Currency")
+                .Where(v => v.Element("ForexBuying") != null && v.Element("ForexBuying").Value.Length > 0)
+                .Select(v => new Currency
+                {
+                    Code = v.Attribute("Kod").Value,
+                    Rate = decimal.Parse(v.Element("ForexBuying").Value.Replace('.', ','))
+                }).ToList();
+
+                return result.FirstOrDefault(s => s.Code == code).Rate;
+            }
+            catch (Exception ex)
+            {
+                return 7;
+            }
+            
         }
         public class Currency
         {
