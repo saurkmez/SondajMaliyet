@@ -53,7 +53,6 @@ namespace SondajMaliyetClass.DB
 	'mId'	INTEGER NOT NULL,
 	'matkapCapi'	REAL NOT NULL,
 	'fiyat'	REAL NOT NULL,
-	'gunlukIs'	INTEGER NOT NULL,
 	PRIMARY KEY('mId' AUTOINCREMENT)
 )";
                     cmd.ExecuteNonQuery();
@@ -145,6 +144,7 @@ namespace SondajMaliyetClass.DB
                     cmd.CommandText = @"CREATE TABLE if not exists 'ZeminTipi' (
 	'zId'	INTEGER NOT NULL,
 	'tipAdi'	TEXT NOT NULL,
+	'gunlukIs'	INTEGER NOT NULL,
 	PRIMARY KEY('zId')
 )";
                     cmd.ExecuteNonQuery();
@@ -189,23 +189,22 @@ namespace SondajMaliyetClass.DB
         {
             List<MatkapCap> listMatkap = new List<MatkapCap>()
             {
-                new MatkapCap(){mId=1, matkapCapi=8.5 , fiyat=1000, gunlukIs=80},
-                new MatkapCap(){mId=2, matkapCapi=9.5 , fiyat=1200, gunlukIs=70},
-                new MatkapCap(){mId=3, matkapCapi=10.5 , fiyat=1700, gunlukIs=60},
-                new MatkapCap(){mId=4, matkapCapi=11.5 , fiyat=1900, gunlukIs=50},
-                new MatkapCap(){mId=5, matkapCapi=12.5 , fiyat=2000, gunlukIs=40},
-                new MatkapCap(){mId=6, matkapCapi=13.5 , fiyat=2500, gunlukIs=30},
-                new MatkapCap(){mId=7, matkapCapi=15.5 , fiyat=3000, gunlukIs=20},
-                new MatkapCap(){mId=8, matkapCapi=17.5 , fiyat=3200, gunlukIs=20},
-                new MatkapCap(){mId=9, matkapCapi=26.5 , fiyat=3500, gunlukIs=20}
+                new MatkapCap(){mId=1, matkapCapi=8.5 , fiyat=1000},
+                new MatkapCap(){mId=2, matkapCapi=9.5 , fiyat=1200},
+                new MatkapCap(){mId=3, matkapCapi=10.5 , fiyat=1700},
+                new MatkapCap(){mId=4, matkapCapi=11.5 , fiyat=1900},
+                new MatkapCap(){mId=5, matkapCapi=12.5 , fiyat=2000},
+                new MatkapCap(){mId=6, matkapCapi=13.5 , fiyat=2500},
+                new MatkapCap(){mId=7, matkapCapi=15.5 , fiyat=3000},
+                new MatkapCap(){mId=8, matkapCapi=17.5 , fiyat=3200}
             };
             List<ZeminTipi> listZemin = new List<ZeminTipi>()
             {
-                new ZeminTipi(){zId=1, tipAdi="Çok Yumuşak"},
-                new ZeminTipi(){zId=2, tipAdi="Yumuşak"},
-                new ZeminTipi(){zId=3, tipAdi="Orta Sert"},
-                new ZeminTipi(){zId=4, tipAdi="Sert"},
-                new ZeminTipi(){zId=5, tipAdi="Çok Sert"}
+                new ZeminTipi(){zId=1, tipAdi="Çok Yumuşak",gunlukIs=80},
+                new ZeminTipi(){zId=2, tipAdi="Yumuşak",gunlukIs=50},
+                new ZeminTipi(){zId=3, tipAdi="Orta Sert",gunlukIs=25},
+                new ZeminTipi(){zId=4, tipAdi="Sert",gunlukIs=13},
+                new ZeminTipi(){zId=5, tipAdi="Çok Sert",gunlukIs=5}
             };
 
             List<Yipranma> listYipranma = new List<Yipranma>()
@@ -219,42 +218,42 @@ namespace SondajMaliyetClass.DB
                 new Yipranma(){matkapId=7,zeminId=1,maxDerinlik=2000},
                 new Yipranma(){matkapId=8,zeminId=1,maxDerinlik=2000},
                 new Yipranma(){matkapId=9,zeminId=1,maxDerinlik=2000},
-                new Yipranma(){matkapId=1,zeminId=2,maxDerinlik=1700},
-                new Yipranma(){matkapId=2,zeminId=2,maxDerinlik=1700},
-                new Yipranma(){matkapId=3,zeminId=2,maxDerinlik=1700},
-                new Yipranma(){matkapId=4,zeminId=2,maxDerinlik=1700},
-                new Yipranma(){matkapId=5,zeminId=2,maxDerinlik=1700},
-                new Yipranma(){matkapId=6,zeminId=2,maxDerinlik=1700},
-                new Yipranma(){matkapId=7,zeminId=2,maxDerinlik=1700},
-                new Yipranma(){matkapId=8,zeminId=2,maxDerinlik=1700},
-                new Yipranma(){matkapId=9,zeminId=2,maxDerinlik=1700},
-                new Yipranma(){matkapId=1,zeminId=3,maxDerinlik=1300},
-                new Yipranma(){matkapId=2,zeminId=3,maxDerinlik=1300},
-                new Yipranma(){matkapId=3,zeminId=3,maxDerinlik=1300},
-                new Yipranma(){matkapId=4,zeminId=3,maxDerinlik=1300},
-                new Yipranma(){matkapId=5,zeminId=3,maxDerinlik=1300},
-                new Yipranma(){matkapId=6,zeminId=3,maxDerinlik=1300},
-                new Yipranma(){matkapId=7,zeminId=3,maxDerinlik=1300},
-                new Yipranma(){matkapId=8,zeminId=3,maxDerinlik=1300},
-                new Yipranma(){matkapId=9,zeminId=3,maxDerinlik=1300},
-                new Yipranma(){matkapId=1,zeminId=4,maxDerinlik=1000},
-                new Yipranma(){matkapId=2,zeminId=4,maxDerinlik=1000},
-                new Yipranma(){matkapId=3,zeminId=4,maxDerinlik=1000},
-                new Yipranma(){matkapId=4,zeminId=4,maxDerinlik=1000},
-                new Yipranma(){matkapId=5,zeminId=4,maxDerinlik=1000},
-                new Yipranma(){matkapId=6,zeminId=4,maxDerinlik=1000},
-                new Yipranma(){matkapId=7,zeminId=4,maxDerinlik=1000},
-                new Yipranma(){matkapId=8,zeminId=4,maxDerinlik=1000},
-                new Yipranma(){matkapId=9,zeminId=4,maxDerinlik=1000},
-                new Yipranma(){matkapId=1,zeminId=5,maxDerinlik=500},
-                new Yipranma(){matkapId=2,zeminId=5,maxDerinlik=500},
-                new Yipranma(){matkapId=3,zeminId=5,maxDerinlik=500},
-                new Yipranma(){matkapId=4,zeminId=5,maxDerinlik=500},
-                new Yipranma(){matkapId=5,zeminId=5,maxDerinlik=500},
-                new Yipranma(){matkapId=6,zeminId=5,maxDerinlik=500},
-                new Yipranma(){matkapId=7,zeminId=5,maxDerinlik=500},
-                new Yipranma(){matkapId=8,zeminId=5,maxDerinlik=500},
-                new Yipranma(){matkapId=9,zeminId=5,maxDerinlik=500}
+                new Yipranma(){matkapId=1,zeminId=2,maxDerinlik=1000},
+                new Yipranma(){matkapId=2,zeminId=2,maxDerinlik=1000},
+                new Yipranma(){matkapId=3,zeminId=2,maxDerinlik=1000},
+                new Yipranma(){matkapId=4,zeminId=2,maxDerinlik=1000},
+                new Yipranma(){matkapId=5,zeminId=2,maxDerinlik=1000},
+                new Yipranma(){matkapId=6,zeminId=2,maxDerinlik=1000},
+                new Yipranma(){matkapId=7,zeminId=2,maxDerinlik=1000},
+                new Yipranma(){matkapId=8,zeminId=2,maxDerinlik=1000},
+                new Yipranma(){matkapId=9,zeminId=2,maxDerinlik=1000},
+                new Yipranma(){matkapId=1,zeminId=3,maxDerinlik=750},
+                new Yipranma(){matkapId=2,zeminId=3,maxDerinlik=750},
+                new Yipranma(){matkapId=3,zeminId=3,maxDerinlik=750},
+                new Yipranma(){matkapId=4,zeminId=3,maxDerinlik=750},
+                new Yipranma(){matkapId=5,zeminId=3,maxDerinlik=750},
+                new Yipranma(){matkapId=6,zeminId=3,maxDerinlik=750},
+                new Yipranma(){matkapId=7,zeminId=3,maxDerinlik=750},
+                new Yipranma(){matkapId=8,zeminId=3,maxDerinlik=750},
+                new Yipranma(){matkapId=9,zeminId=3,maxDerinlik=750},
+                new Yipranma(){matkapId=1,zeminId=4,maxDerinlik=500},
+                new Yipranma(){matkapId=2,zeminId=4,maxDerinlik=500},
+                new Yipranma(){matkapId=3,zeminId=4,maxDerinlik=500},
+                new Yipranma(){matkapId=4,zeminId=4,maxDerinlik=500},
+                new Yipranma(){matkapId=5,zeminId=4,maxDerinlik=500},
+                new Yipranma(){matkapId=6,zeminId=4,maxDerinlik=500},
+                new Yipranma(){matkapId=7,zeminId=4,maxDerinlik=500},
+                new Yipranma(){matkapId=8,zeminId=4,maxDerinlik=500},
+                new Yipranma(){matkapId=9,zeminId=4,maxDerinlik=500},
+                new Yipranma(){matkapId=1,zeminId=5,maxDerinlik=300},
+                new Yipranma(){matkapId=2,zeminId=5,maxDerinlik=300},
+                new Yipranma(){matkapId=3,zeminId=5,maxDerinlik=300},
+                new Yipranma(){matkapId=4,zeminId=5,maxDerinlik=300},
+                new Yipranma(){matkapId=5,zeminId=5,maxDerinlik=300},
+                new Yipranma(){matkapId=6,zeminId=5,maxDerinlik=300},
+                new Yipranma(){matkapId=7,zeminId=5,maxDerinlik=300},
+                new Yipranma(){matkapId=8,zeminId=5,maxDerinlik=300},
+                new Yipranma(){matkapId=9,zeminId=5,maxDerinlik=300}
 
             };
 
@@ -267,13 +266,12 @@ namespace SondajMaliyetClass.DB
                     SQLiteCommand cmd = new SQLiteCommand(con);
                     foreach (var item in listMatkap)
                     {
-                        cmd.CommandText = @"insert into MatkapCap (mId, matkapCapi,fiyat,gunlukIs) 
-                                            select @mId,@matkapCapi,@fiyat,@gunlukIs 
-                                            where not exist(select 1 from MatkapCap where matkapCapi = @matkapCapi)"; 
+                        cmd.CommandText = @"insert into MatkapCap (mId, matkapCapi,fiyat) 
+                                            select @mId,@matkapCapi,@fiyat 
+                                            where NOT EXISTS(select 1 from MatkapCap where matkapCapi = @matkapCapi)"; 
                         cmd.Parameters.AddWithValue("@mId", item.mId);
                         cmd.Parameters.AddWithValue("@matkapCapi", item.matkapCapi);
                         cmd.Parameters.AddWithValue("@fiyat", item.fiyat);
-                        cmd.Parameters.AddWithValue("@gunlukIs", item.gunlukIs);
                         cmd.ExecuteNonQuery();
                     }
                     con.Close();
@@ -292,10 +290,11 @@ namespace SondajMaliyetClass.DB
                     SQLiteCommand cmd = new SQLiteCommand(con);
                     foreach (var item in listZemin)
                     {
-                        cmd.CommandText = @"replace into ZeminTipi (zId, tipAdi) 
-                                            VALUES (@zId,@tipAdi)";
+                        cmd.CommandText = @"replace into ZeminTipi (zId, tipAdi, gunlukIs) 
+                                            VALUES (@zId,@tipAdi,@gunlukIs)";
                         cmd.Parameters.AddWithValue("@zId", item.zId);
                         cmd.Parameters.AddWithValue("@tipAdi", item.tipAdi);
+                        cmd.Parameters.AddWithValue("@gunlukIs", item.gunlukIs);
                         cmd.ExecuteNonQuery();
                     }
                     con.Close();

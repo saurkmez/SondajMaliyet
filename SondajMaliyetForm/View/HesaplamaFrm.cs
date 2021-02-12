@@ -18,12 +18,14 @@ namespace SondajMaliyetForm.View
         List<ComboBox> zemincombo = new List<ComboBox>();
         List<ComboBox> matkapcombo = new List<ComboBox>();
         List<TextBox> derinlikListText = new List<TextBox>();
+        List<ComboBox> delgiListText = new List<ComboBox>();
         double[] yipranmaList = new double[6];
         double[] mazotlist = new double[6];
         double[] nakliyelist = new double[6];
         double topmal = 0;
         double topbirimmal = 0;
         int topderin = 0;
+        int topDelgiDerinlik = 0;
         int y = 65;
         int panelSayisi = 0;
         public HesaplamaFrm()
@@ -85,10 +87,12 @@ namespace SondajMaliyetForm.View
             };
             pnlDelme.Controls.Add(delmeTur);
             pnlDelme.Controls.Add(delmeCesit);
+            delmeCesit.Tag = delmeCesit.SelectedIndex;
+            delgiListText.Add(delmeCesit);
 
 
             ////////////////////////////////////////////
-            
+
 
 
             List<ZeminTipi> listzemin = new List<ZeminTipi>();
@@ -387,6 +391,11 @@ namespace SondajMaliyetForm.View
 
         private void BtnSil_Click(object sender, EventArgs e)
         {
+            if(panelSayisi == 1)
+            {
+                MessageBox.Show("Minimum Adete ulaşıldı!!");
+                return;
+            }
             Button btn = (Button)sender;
             Panel pnl = (Panel)btn.Tag;
             int panelsira = (int)pnl.Tag;
@@ -422,16 +431,6 @@ namespace SondajMaliyetForm.View
             }
             panel2.Controls.RemoveAt(silinecek);
 
-            //for(int i = panelsira; i<panelSayisi; i++)
-            //{
-            //    foreach (Control item in panel2.Controls)
-            //    {
-            //        if (item.Name == (i+1).ToString())
-            //        {
-                        
-            //        }
-            //    }
-            //}
             panelSayisi--;
             y = y - 50;
 
@@ -452,7 +451,10 @@ namespace SondajMaliyetForm.View
                 maliyet.Text = maliyetHesapla(zemincombo[i].SelectedIndex, matkapcombo[i].SelectedIndex,
                     Convert.ToInt32(derinlikListText[i].Text), i).ToString();
                 topmal += Convert.ToDouble(maliyet.Text);
-                topderin += Convert.ToInt32(derinlikListText[i].Text);
+                if(delgiListText[i].SelectedIndex == 0)
+                {
+                    topderin += Convert.ToInt32(derinlikListText[i].Text);
+                }
             }
             lblTopMaliyet.Text = topmal.ToString("0.00") + " TL";
             topbirimmal = (topmal / topderin);
@@ -516,13 +518,12 @@ namespace SondajMaliyetForm.View
                     {
                         con.Open();
                         SQLiteCommand cmd = new SQLiteCommand(con);
-                        cmd.CommandText = @"select fiyat,gunlukIs from MatkapCap where mId=@matkapId";
+                        cmd.CommandText = @"select fiyat from MatkapCap where mId=@matkapId";
                         cmd.Parameters.AddWithValue("@matkapId", mId);
                         SQLiteDataReader reader = cmd.ExecuteReader();
                         while (reader.Read())
                         {
                             fiyat = reader.GetDouble(0);
-                            gunlukIs = reader.GetInt32(1);
                         }
                         con.Close();
                     }
@@ -532,6 +533,29 @@ namespace SondajMaliyetForm.View
                         throw;
                     }
                 }
+                using (SQLiteConnection con = new SQLiteConnection("Data Source=sondajMaliyet.db;Version=3;"))
+                {
+                    try
+                    {
+                        con.Open();
+                        SQLiteCommand cmd = new SQLiteCommand(con);
+                        cmd.CommandText = @"select gunlukIs from ZeminTipi where zId=@zId";
+                        cmd.Parameters.AddWithValue("@zId", zId);
+                        SQLiteDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            gunlukIs = reader.GetInt32(0);
+                        }
+                        con.Close();
+                    }
+                    catch (Exception)
+                    {
+                        con.Close();
+                        throw;
+                    }
+                }
+
+
                 double yipranmaUcreti = (derinlik * fiyat / maxDerinlik) * Convert.ToDouble(GetRate("USD"));
 
                 yipranmaList[index] = yipranmaUcreti;
@@ -627,9 +651,9 @@ namespace SondajMaliyetForm.View
 
                 toplamMaliyetHesabı = nakliyeHesabı + mazotHesabı + hesapiscilikMaliyeti + yipranmaUcreti;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
             
 
@@ -741,6 +765,9 @@ namespace SondajMaliyetForm.View
 
         private void button3_Click(object sender, EventArgs e)
         {
+            yipranmaList = new double[6];
+            mazotlist = new double[6];
+            nakliyelist = new double[6];
             Hesapla();
         }
     }

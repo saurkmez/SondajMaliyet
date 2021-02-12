@@ -10,5 +10,6 @@ namespace SondajMaliyetClass.Models
     {
         public int zId { get; set; }
         public string tipAdi { get; set; }
+        public int gunlukIs { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace SondajMaliyetClass.Models
         public int mId { get; set; }
         public double matkapCapi { get; set; }
         public double fiyat { get; set; }
-        public int gunlukIs { get; set; }
+        
     }
 }

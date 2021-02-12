@@ -87,15 +87,18 @@ namespace SondajMaliyetForm.View
                     throw;
                 }
             }
-
-            txt85inch.Text = matkaps.Where(x => x.matkapCapi == 8.5).FirstOrDefault().fiyat.ToString();
-            txt95inch.Text = matkaps.Where(x => x.matkapCapi == 9.5).FirstOrDefault().fiyat.ToString();
-            txt105inch.Text = matkaps.Where(x => x.matkapCapi == 10.5).FirstOrDefault().fiyat.ToString();
-            txt115inch.Text = matkaps.Where(x => x.matkapCapi == 11.5).FirstOrDefault().fiyat.ToString();
-            txt125inch.Text = matkaps.Where(x => x.matkapCapi == 12.5).FirstOrDefault().fiyat.ToString();
-            txt135inch.Text = matkaps.Where(x => x.matkapCapi == 13.5).FirstOrDefault().fiyat.ToString();
-            txt155inch.Text = matkaps.Where(x => x.matkapCapi == 15.5).FirstOrDefault().fiyat.ToString();
-            txt175inch.Text = matkaps.Where(x => x.matkapCapi == 17.5).FirstOrDefault().fiyat.ToString();
+            if (matkaps.Count > 0)
+            {
+                txt85inch.Text = matkaps.Where(x => x.matkapCapi == 8.5).FirstOrDefault().fiyat.ToString();
+                txt95inch.Text = matkaps.Where(x => x.matkapCapi == 9.5).FirstOrDefault().fiyat.ToString();
+                txt105inch.Text = matkaps.Where(x => x.matkapCapi == 10.5).FirstOrDefault().fiyat.ToString();
+                txt115inch.Text = matkaps.Where(x => x.matkapCapi == 11.5).FirstOrDefault().fiyat.ToString();
+                txt125inch.Text = matkaps.Where(x => x.matkapCapi == 12.5).FirstOrDefault().fiyat.ToString();
+                txt135inch.Text = matkaps.Where(x => x.matkapCapi == 13.5).FirstOrDefault().fiyat.ToString();
+                txt155inch.Text = matkaps.Where(x => x.matkapCapi == 15.5).FirstOrDefault().fiyat.ToString();
+                txt175inch.Text = matkaps.Where(x => x.matkapCapi == 17.5).FirstOrDefault().fiyat.ToString();
+            }
+            
 
 
             using (SQLiteConnection con = new SQLiteConnection("Data Source=sondajMaliyet.db;Version=3;"))
